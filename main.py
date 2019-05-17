@@ -9,6 +9,9 @@ class Rate:
         self.eur = eur
         self.time = time
 
+    def __str__(self):
+        return "Time: " + self.time + "\nRate: " + self.eur + " [EUR]"
+
 
 TICKER_URL = "https://api.coindesk.com/v1/bpi/currentprice.json"
 def get_rate():
@@ -33,19 +36,20 @@ def get_balance(addr):
 
 
 def main():
-    if len(sys.argv) <= 1:
-        print("usage: ./prog address")
-        return
-
-    addr = sys.argv[1]
-    print("Requesting Balance of: " + addr)
-
     rate = 0
     try:
         rate = get_rate()
     except Exception as ex:
         print("unable to get bitcoin rate | " + ex)
         return
+
+    print(str(rate))
+
+    if len(sys.argv) <= 1:
+        return
+
+    addr = sys.argv[1]
+    print("Requesting Balance of: " + addr)
 
     balance = 0
     try:
@@ -60,8 +64,6 @@ def main():
         if c != ",":
             str_rate.append(c)
 
-    print("Time: " + rate.time)
-    print("Rate [EUR]: " + rate.eur)
     print("-- Address Balance --")
     print(" - " + str(balance / 100000000))
     print(" - " + str(balance) + " [Sat]")
