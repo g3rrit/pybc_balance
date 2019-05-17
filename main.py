@@ -30,8 +30,6 @@ def get_balance(addr):
         r = requests.get(BALANCE_URL + str(addr) + "?confirmations=6")
     except Exception as ex:
         raise ex
-    print(r.text)
-    print(r.text)
     return int(r.text)
 
 
